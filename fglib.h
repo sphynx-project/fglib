@@ -64,15 +64,21 @@ typedef enum fglib_color_format {
    FGLIB_COLOR_FORMAT_ARGB   = 0x03
 } fglib_color_format;
 
-// fglib context struct to store necessary info.
+void fglib_set_color_mode(fglib_ctx* ctx, fglib_color_format mode);
+
+// fglib queue functions and structs.
+typedef struct fglib_queue {
+   _fglib_type_u64 count;
+   _fglib_type_u64 current;
+} fglib_queue; 
+
+// fglib context functions and structs.
 typedef struct fglib_ctx {
    fglib_framebuffer* framebuffer;
    fglib_color_format color_mode;
+   fglib_queue queue;
 } fglib_ctx;
 
-void fglib_set_color_mode(fglib_ctx* ctx, fglib_color_format mode);
-
-// Function for context management.
 fglib_ctx fglib_ctx_init(void* framebuffer, fglib_fb_format format);
 
 #ifdef FGLIB_IMPLEMENTATION
