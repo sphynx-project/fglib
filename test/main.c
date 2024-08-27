@@ -18,8 +18,9 @@ int main() {
   _fglib_queue_push(&ctx, &ac);
   _fglib_queue_push(&ctx, &ac);
   _fglib_queue_push(&ctx, &ac);
-  
-  fglib_queue_commit(&ctx);
 
+  printf("(Before commit) Drawing: %s. Actions in queue: %lld\n", ctx.drawing ? "Yes" : "No", ctx.queue.size);  
+  fglib_queue_commit(&ctx);
+  printf("(After commit) Drawing: %s. Actions in queue: %lld\n", ctx.drawing ? "Yes" : "No", ctx.queue.size);
   return 0;
 }
