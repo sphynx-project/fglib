@@ -24,6 +24,7 @@
 #ifndef FGLIB_H
 #define FGLIB_H
 
+// fglib context struct to store necessary info.
 typedef struct fglib_ctx {
   // ...
 } fglib_ctx;
