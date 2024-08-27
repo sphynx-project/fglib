@@ -19,7 +19,7 @@ fglib is header only and to include it, initialize it and draw a simple rect (ex
 
 // Get framebuffer, using limine...
 
-int main() {
+void _start() {
   // Pass the framebuffer struct pointer and specify the format. And set the color mode (not specific to framebuffer, only to the users preference).
   fglib_ctx ctx = fglib_ctx_init(framebuffer, FGLIB_FB_FORMAT_LIMINE);
   fglib_set_color_mode(&ctx, FGLIB_COLOR_FORMAT_RGB); // Just RGB and not RGBA (or ARGB) since we wont use alpha.
@@ -36,5 +36,7 @@ int main() {
 
   // Finally commit our changes, this draws the things in the "queue". Commit also clears the queue, so we can draw new things.
   fglib_queue_commit(&ctx);
+
+  for(;;);
 }
 ``` 
