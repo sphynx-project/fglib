@@ -24,14 +24,36 @@
 #ifndef FGLIB_H
 #define FGLIB_H
 
-// fglib context struct to store necessary info.
-typedef struct fglib_ctx {
-  // ...
-} fglib_ctx;
+// Internal types.
+typedef unsigned long long      u64;
+typedef unsigned int            u32;
+typedef unsigned short          u16;
+typedef unsigned char           u8;
 
-// fglib framebuffer formats.
+// fglib framebuffer formats and struct.
 #define FGLIB_FB_FORMAT_FGLIB_CUSTOM    0x01
 #define FGLIB_FB_FORMAT_LIMINE          0x02
+
+typedef struct fglib_framebuffer
+{
+    u64 address;
+    u32 width;
+    u32 height;
+    u32 pitch;
+    u16 bpp;
+    u8  red_mask_size;
+    u8  red_mask_shift;
+    u8  green_mask_size;
+    u8  green_mask_shift;
+    u8  blue_mask_size;
+    u8  blue_mask_shift;
+} fglib_framebuffer;
+
+
+// fglib context struct to store necessary info.
+typedef struct fglib_ctx {
+  fglib_framebuffer framebuffer;
+} fglib_ctx;
 
 // Function to construct the context.
 fglib_ctx fglib_ctx_init(void* framebuffer, int format);
