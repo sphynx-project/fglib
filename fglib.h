@@ -29,13 +29,21 @@ typedef unsigned long long      _fglib_type_u64;
 typedef unsigned int            _fglib_type_u32;
 typedef unsigned short          _fglib_type_u16;
 typedef unsigned char           _fglib_type_u8;
+
 typedef long long               _fglib_type_i64;
 typedef int                     _fglib_type_i32;
 typedef short                   _fglib_type_i16;
 typedef char                    _fglib_type_i8;
 
+#ifndef NULL
+#define NULL (void*)0
+#endif // NULL
+
 // Forward declares.
 typedef struct fglib_ctx fglib_ctx;
+
+// Limits and internal defines.
+#define FGLIB_MAX_STACK 4096
 
 // fglib framebuffer formats and struct.
 typedef enum fglib_fb_format {
@@ -80,22 +88,24 @@ typedef struct fglib_action {
 } fglib_action;
 
 typedef struct fglib_queue {
-   _fglib_type_u64 count;
-   _fglib_type_u64 current;
-   fglib_action* stack;
+   _fglib_type_u64 size;
+   fglib_action* stack[FGLIB_MAX_STACK];
 } fglib_queue;
-
-#define fglib_queue_push(queue) 0
-#define fglib_queue_pop(queue) 0
 
 void fglib_queue_begin(fglib_ctx* ctx);
 void fglib_queue_commit(fglib_ctx* ctx);
+
+// Internal functions for queue pushing and poping. 
+void _fglib_queue_push(fglib_ctx* ctx, fglib_action* action);
+void _fglib_queue_pop(fglib_ctx* ctx);
+void _fglib_queue_clear(fglib_ctx* ctx);
 
 // fglib context functions and structs.
 typedef struct fglib_ctx {
    fglib_framebuffer* framebuffer;
    fglib_color_format color_mode;
    fglib_queue queue;
+   int drawing;
 } fglib_ctx;
 
 fglib_ctx fglib_ctx_init(void* framebuffer, fglib_fb_format format);
@@ -105,7 +115,7 @@ fglib_ctx fglib_ctx_init(void* framebuffer, fglib_fb_format format);
 // Context specific functions.
 fglib_ctx fglib_ctx_init(void* framebuffer, fglib_fb_format format) {
    fglib_ctx ctx;
-   
+
    switch(format) {
       case FGLIB_FB_FORMAT_FGLIB_CUSTOM:
          ctx.framebuffer = (fglib_framebuffer*)framebuffer;
@@ -122,7 +132,32 @@ fglib_ctx fglib_ctx_init(void* framebuffer, fglib_fb_format format) {
 
 // Color and framebuffer functions.
 void fglib_set_color_mode(fglib_ctx* ctx, fglib_color_format mode) {
-   ctx.color_mode = mode;
+   ctx->color_mode = mode;
+}
+
+// Queue functions
+void _fglib_queue_push(fglib_ctx* ctx, fglib_action* action) {
+   ctx->queue.stack[ctx->queue.size++] = action;
+}
+
+void _fglib_queue_pop(fglib_ctx* ctx) {
+   ctx->queue.stack[ctx->queue.size--] = NULL;
+}
+
+void _fglib_queue_clear(fglib_ctx* ctx) {
+   while(ctx->queue.size > 0)
+      _fglib_queue_pop(ctx);
+}
+
+void fglib_queue_begin(fglib_ctx* ctx) {
+   _fglib_queue_clear(ctx);
+   ctx->drawing = 1;
+}
+
+void fglib_queue_commit(fglib_ctx* ctx) {
+   ctx->drawing = 0;
+   // TODO: Drawing logic
+   _fglib_queue_clear(ctx);
 }
 
 #endif // FGLIB_IMPLEMENTATION
