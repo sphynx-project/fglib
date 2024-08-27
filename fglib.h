@@ -1,4 +1,25 @@
-/* fglib v1.0 - Freestanding Graphic Library */
+/* fglib v1.0 - Freestanding Graphic Library - public domain or MIT license
+   This is a single-header graphics library designed for freestanding environments.
+   To use, simply include this header file:
+
+       #define FGLIB_IMPLEMENTATION
+       #include "fglib.h"
+
+   You can freely use this library in your projects either under the MIT license or
+   as public domain. Simply choose whichever suits your project best.
+
+   Optionally, define `FGLIB_IMPLEMENTATION` in exactly one source file to create the
+   implementation:
+
+       #define FGLIB_IMPLEMENTATION
+       #include "fglib.h"
+
+   Written by SphynxOS Developers. This library is designed to be minimal, requiring
+   no external dependencies.
+
+   Contributors:
+     - Kevin Alavik: Initial design.
+*/
 
 #ifndef FGLIB_H
 #define FGLIB_H
