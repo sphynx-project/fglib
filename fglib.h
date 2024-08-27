@@ -34,6 +34,9 @@ typedef int                     _fglib_type_i32;
 typedef short                   _fglib_type_i16;
 typedef char                    _fglib_type_i8;
 
+// Forward declares.
+typedef struct fglib_ctx fglib_ctx;
+
 // fglib framebuffer formats and struct.
 typedef enum fglib_fb_format {
    FGLIB_FB_FORMAT_FGLIB_CUSTOM = 0x01,
@@ -66,11 +69,27 @@ typedef enum fglib_color_format {
 
 void fglib_set_color_mode(fglib_ctx* ctx, fglib_color_format mode);
 
-// fglib queue functions and structs.
+// fglib queue (and actions) functions and structs.
+typedef enum fglib_action_kind {
+   FGLIB_ACTION_DRAW   = 0x01
+} fglib_action_kind;
+
+typedef struct fglib_action {
+   fglib_action_kind kind;
+   void* data;
+} fglib_action;
+
 typedef struct fglib_queue {
    _fglib_type_u64 count;
    _fglib_type_u64 current;
-} fglib_queue; 
+   fglib_action* stack;
+} fglib_queue;
+
+#define fglib_queue_push(queue) 0
+#define fglib_queue_pop(queue) 0
+
+void fglib_queue_begin(fglib_ctx* ctx);
+void fglib_queue_commit(fglib_ctx* ctx);
 
 // fglib context functions and structs.
 typedef struct fglib_ctx {
