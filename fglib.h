@@ -36,6 +36,8 @@ typedef unsigned char           u8;
 
 typedef struct fglib_framebuffer
 {
+    u64 kind;
+    u64 id;
     u64 address;
     u32 width;
     u32 height;
