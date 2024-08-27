@@ -3,7 +3,9 @@
 #ifndef FGLIB_H
 #define FGLIB_H
 
-// todo
+typedef struct fglib_ctx {
+  // ...
+} fglib_ctx;
 
 #endif // FGLIB_H
 
