@@ -7,6 +7,10 @@ typedef struct fglib_ctx {
   // ...
 } fglib_ctx;
 
+#ifdef FGLIB_IMPLEMENTATION
+
+#endif // FGLIB_IMPLEMENTATION
+
 #endif // FGLIB_H
 
 /* MIT License
