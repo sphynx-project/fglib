@@ -29,6 +29,13 @@ typedef struct fglib_ctx {
   // ...
 } fglib_ctx;
 
+// fglib framebuffer formats.
+#define FGLIB_FB_FORMAT_FGLIB_CUSTOM    0x01
+#define FGLIB_FB_FORMAT_LIMINE          0x02
+
+// Function to construct the context.
+fglib_ctx fglib_ctx_init(void* framebuffer, int format);
+
 #ifdef FGLIB_IMPLEMENTATION
 
 #endif // FGLIB_IMPLEMENTATION
