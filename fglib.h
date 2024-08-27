@@ -25,10 +25,14 @@
 #define FGLIB_H
 
 // Internal types.
-typedef unsigned long long      u64;
-typedef unsigned int            u32;
-typedef unsigned short          u16;
-typedef unsigned char           u8;
+typedef unsigned long long      _fglib_type_u64;
+typedef unsigned int            _fglib_type_u32;
+typedef unsigned short          _fglib_type_u16;
+typedef unsigned char           _fglib_type_u8;
+typedef long long               _fglib_type_i64;
+typedef int                     _fglib_type_i32;
+typedef short                   _fglib_type_i16;
+typedef char                    _fglib_type_i8;
 
 // fglib framebuffer formats and struct.
 #define FGLIB_FB_FORMAT_FGLIB_CUSTOM    0x01
@@ -36,19 +40,19 @@ typedef unsigned char           u8;
 
 typedef struct fglib_framebuffer
 {
-    u64 kind;
-    u64 id;
-    u64 address;
-    u32 width;
-    u32 height;
-    u32 pitch;
-    u16 bpp;
-    u8  red_mask_size;
-    u8  red_mask_shift;
-    u8  green_mask_size;
-    u8  green_mask_shift;
-    u8  blue_mask_size;
-    u8  blue_mask_shift;
+    _fglib_type_u64 kind;
+    _fglib_type_u64 id;
+    _fglib_type_u64 address;
+    _fglib_type_u32 width;
+    _fglib_type_u32 height;
+    _fglib_type_u32 pitch;
+    _fglib_type_u16 bpp;
+    _fglib_type_u8  red_mask_size;
+    _fglib_type_u8  red_mask_shift;
+    _fglib_type_u8  green_mask_size;
+    _fglib_type_u8  green_mask_shift;
+    _fglib_type_u8  blue_mask_size;
+    _fglib_type_u8  blue_mask_shift;
 } fglib_framebuffer;
 
 
