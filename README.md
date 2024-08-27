@@ -28,10 +28,13 @@ int main() {
   fglib_cord points[4] = {{0, 0}, {1, 0}, {1, 1}, {0,1}};
   fglib_shape rect = fglib_shape_init(&ctx, points, 4);
 
+  // Start a "queue"
+  fglib_queue_begin(&ctx);
+
   // Draw a red rect at 0, 0 based on our shape.
   fglib_draw_shape(&ctx, &rect, 0, 0, fglib_color_rgb(255, 0, 0));
 
   // Finally commit our changes, this draws the things in the "queue". Commit also clears the queue, so we can draw new things.
-  fglib_commit(&ctx);
+  fglib_queue_commit(&ctx);
 }
 ``` 
