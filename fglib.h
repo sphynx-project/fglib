@@ -58,13 +58,32 @@ typedef struct fglib_framebuffer
 
 // fglib context struct to store necessary info.
 typedef struct fglib_ctx {
-  fglib_framebuffer framebuffer;
+  fglib_framebuffer* framebuffer;
 } fglib_ctx;
 
 // Function to construct the context.
 fglib_ctx fglib_ctx_init(void* framebuffer, int format);
 
 #ifdef FGLIB_IMPLEMENTATION
+
+// Function to construct the context.
+fglib_ctx fglib_ctx_init(void* framebuffer, int format) {
+   fglib_ctx ctx;
+   
+   switch(format) {
+      case FGLIB_FB_FORMAT_FGLIB_CUSTOM:
+         ctx.framebuffer = (fglib_framebuffer*)framebuffer;
+         ctx.framebuffer.kind = FGLIB_FB_FORMAT_FGLIB_CUSTOM;
+         // TODO: Generate some sort of id generator
+         ctx.framebuffer.id = 0;
+         break;
+      default:
+         ctx.framebuffer = NULL;
+         break;
+   }
+
+   return ctx;
+}
 
 #endif // FGLIB_IMPLEMENTATION
 
