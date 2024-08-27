@@ -73,9 +73,6 @@ fglib_ctx fglib_ctx_init(void* framebuffer, int format) {
    switch(format) {
       case FGLIB_FB_FORMAT_FGLIB_CUSTOM:
          ctx.framebuffer = (fglib_framebuffer*)framebuffer;
-         ctx.framebuffer.kind = FGLIB_FB_FORMAT_FGLIB_CUSTOM;
-         // TODO: Generate some sort of id generator
-         ctx.framebuffer.id = 0;
          break;
       default:
          ctx.framebuffer = NULL;
