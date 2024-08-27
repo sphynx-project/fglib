@@ -8,6 +8,30 @@ fglib provides utility functions for doing simple and advanced graphic functions
 
 ## Usage
 
-fglib is header only and to use it and initialize it simply do:
+*Note: This is just an example on how it will work*
+
+fglib is header only and to include it, initialize it and draw a simple rect (example with limine) simply do it:
 ```cpp
-#define FGLIB_IMPL
+#include <limine.h>
+
+#define FGLIB_IMPLEMENTATION
+#include "fglib.h"
+
+// Get framebuffer, using limine...
+
+int main() {
+  // Pass the framebuffer struct pointer and specify the format. And set the color mode (not specific to framebuffer, only to the users preference).
+  fglib_ctx ctx = fglib_ctx_init(framebuffer, FGLIB_FB_FORMAT_LIMINE);
+  fglib_set_color_mode(&ctx, FGLIB_COLOR_FORMAT_RGB); // Just RGB and not RGBA (or ARGB) since we wont use alpha rn.
+
+  // Cord's for a shape is based on the cord that we draw the points. So the fglib_cord's here act like a offset.
+  fglib_cord points[4] = {{0, 0}, {1, 0}, {1, 1}, {0,1}};
+  fglib_shape rect = fglib_shape_init(&ctx, points, 4);
+
+  // Draw a red rect at 0, 0 based on our shape
+  fglib_draw_shape(&ctx, &rect, 0, 0, fglib_color_rgb(255, 0, 0));
+
+  // Finally commit our changes, this draws the things in the "queue"
+  fglib_commit(&ctx);
+}
+``` 
