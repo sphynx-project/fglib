@@ -35,8 +35,10 @@ typedef short                   _fglib_type_i16;
 typedef char                    _fglib_type_i8;
 
 // fglib framebuffer formats and struct.
-#define FGLIB_FB_FORMAT_FGLIB_CUSTOM    0x01
-#define FGLIB_FB_FORMAT_LIMINE          0x02
+typedef enum fglib_fb_format {
+   FGLIB_FB_FORMAT_FGLIB_CUSTOM = 0x01,
+   FGLIB_FB_FORMAT_LIMINE       = 0x02
+} fglib_fb_format;
 
 typedef struct fglib_framebuffer
 {
@@ -55,19 +57,28 @@ typedef struct fglib_framebuffer
     _fglib_type_u8  blue_mask_shift;
 } fglib_framebuffer;
 
+// fglib color functions and structs.
+typedef enum fglib_color_format {
+   FGLIB_COLOR_FORMAT_RGB    = 0x01,
+   FGLIB_COLOR_FORMAT_RGBA   = 0x02,
+   FGLIB_COLOR_FORMAT_ARGB   = 0x03
+} fglib_color_format;
 
 // fglib context struct to store necessary info.
 typedef struct fglib_ctx {
-  fglib_framebuffer* framebuffer;
+   fglib_framebuffer* framebuffer;
+   fglib_color_format color_mode;
 } fglib_ctx;
 
-// Function to construct the context.
-fglib_ctx fglib_ctx_init(void* framebuffer, int format);
+void fglib_set_color_mode(fglib_ctx* ctx, fglib_color_format mode);
+
+// Function for context management.
+fglib_ctx fglib_ctx_init(void* framebuffer, fglib_fb_format format);
 
 #ifdef FGLIB_IMPLEMENTATION
 
-// Function to construct the context.
-fglib_ctx fglib_ctx_init(void* framebuffer, int format) {
+// Context specific functions.
+fglib_ctx fglib_ctx_init(void* framebuffer, fglib_fb_format format) {
    fglib_ctx ctx;
    
    switch(format) {
@@ -79,7 +90,14 @@ fglib_ctx fglib_ctx_init(void* framebuffer, int format) {
          break;
    }
 
+   ctx.color_mode = FGLIB_COLOR_FORMAT_RGBA;
+
    return ctx;
+}
+
+// Color and framebuffer functions.
+void fglib_set_color_mode(fglib_ctx* ctx, fglib_color_format mode) {
+   ctx.color_mode = mode;
 }
 
 #endif // FGLIB_IMPLEMENTATION
