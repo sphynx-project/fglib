@@ -82,7 +82,6 @@ typedef enum fglib_fb_format
 typedef struct fglib_framebuffer
 {
     _fglib_type_u64 kind;             // Framebuffer kind identifier.
-    _fglib_type_u64 id;               // Framebuffer ID.
     _fglib_type_u64 address;          // Base address of the framebuffer.
     _fglib_type_u32 width;            // Width of the framebuffer in pixels.
     _fglib_type_u32 height;           // Height of the framebuffer in pixels.
@@ -268,8 +267,19 @@ void _fglib_fb_plot(fglib_ctx *ctx, int x, int y, _fglib_type_u32 color)
         return;
 
     _fglib_type_u8 *fb = (_fglib_type_u8 *)ctx->framebuffer->address;
-    _fglib_type_u32 offset = (y * ctx->framebuffer->pitch) + (x * (ctx->framebuffer->bpp / 8));
+    _fglib_type_u32 offset;
 
+	switch(ctx->framebuffer->kind)
+	{
+		case FGLIB_FB_FORMAT_FGLIB_CUSTOM:
+		case FGLIB_FB_FORMAT_LIMINE:
+			offset = (y * ctx->framebuffer->pitch) + (x * (ctx->framebuffer->bpp / 8));
+			break;
+		default:
+			offset = y * ctx->framebuffer->width + x;
+			break;
+	}
+   
     // Plot the pixel based on the color mode.
     switch (ctx->color_mode)
     {
