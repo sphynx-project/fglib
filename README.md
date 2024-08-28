@@ -8,9 +8,7 @@ fglib provides utility functions for doing simple and advanced graphic functions
 
 ## Usage
 
-*Note: This is just an example on how it will work*
-
-fglib is header only and to include it, initialize it and draw a simple rect (example with limine) simply do it:
+fglib is header only and to include it. Here is an example to initialize it and draw a simple rect (example with limine) simply do it:
 ```cpp
 #include <limine.h>
 
