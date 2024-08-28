@@ -30,8 +30,8 @@
 #define FGLIB_H
 
 // Check architecture and define internal types accordingly.
-#if defined(__x86_64__) || defined(_M_X64) || defined(__aarch64__) || defined(__PPC64__)
-    // 64-bit architecture
+#if defined(_WIN32) || defined(_WIN64)
+    // Windows 32-bit and 64-bit
     typedef unsigned long long  _fglib_type_u64; // 64-bit unsigned integer
     typedef unsigned int        _fglib_type_u32; // 32-bit unsigned integer
     typedef unsigned short      _fglib_type_u16; // 16-bit unsigned integer
@@ -41,14 +41,25 @@
     typedef int                 _fglib_type_i32; // 32-bit signed integer
     typedef short               _fglib_type_i16; // 16-bit signed integer
     typedef char                _fglib_type_i8;  // 8-bit signed integer
-#elif defined(__i386__) || defined(_M_IX86) || defined(__arm__) || defined(__PPC__)
-    // 32-bit architecture
+#elif defined(__x86_64__) || defined(__aarch64__) || defined(__PPC64__)
+    // 64-bit non-Windows
     typedef unsigned long       _fglib_type_u64; // 64-bit unsigned integer
     typedef unsigned int        _fglib_type_u32; // 32-bit unsigned integer
     typedef unsigned short      _fglib_type_u16; // 16-bit unsigned integer
     typedef unsigned char       _fglib_type_u8;  // 8-bit unsigned integer
 
     typedef long                _fglib_type_i64; // 64-bit signed integer
+    typedef int                 _fglib_type_i32; // 32-bit signed integer
+    typedef short               _fglib_type_i16; // 16-bit signed integer
+    typedef char                _fglib_type_i8;  // 8-bit signed integer
+#elif defined(__i386__) || defined(__arm__) || defined(__PPC__)
+    // 32-bit non-Windows
+    typedef unsigned long long  _fglib_type_u64; // 64-bit unsigned integer
+    typedef unsigned int        _fglib_type_u32; // 32-bit unsigned integer
+    typedef unsigned short      _fglib_type_u16; // 16-bit unsigned integer
+    typedef unsigned char       _fglib_type_u8;  // 8-bit unsigned integer
+
+    typedef long long           _fglib_type_i64; // 64-bit signed integer
     typedef int                 _fglib_type_i32; // 32-bit signed integer
     typedef short               _fglib_type_i16; // 16-bit signed integer
     typedef char                _fglib_type_i8;  // 8-bit signed integer
