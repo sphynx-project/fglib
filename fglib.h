@@ -184,6 +184,7 @@ _fglib_type_u32 fglib_color_argb(_fglib_type_u8 alpha, _fglib_type_u8 red, _fgli
 
 // Internal functions for framebuffer management.
 void _fglib_fb_plot(fglib_ctx *ctx, int x, int y, _fglib_type_u32 color);
+fglib_framebuffer _fglib_construct_fb();
 
 #ifdef FGLIB_IMPLEMENTATION
 
@@ -197,7 +198,12 @@ fglib_ctx fglib_ctx_init(void *framebuffer, fglib_fb_format format)
     case FGLIB_FB_FORMAT_FGLIB_CUSTOM:
         ctx.framebuffer = (fglib_framebuffer *)framebuffer;
         break;
-    default:
+	case FGLIB_FB_FORMAT_LIMINE:
+		struct limine_framebuffer* _fb = (struct limine_framebuffer*)framebuffer;
+		fglib_framebuffer fb = _fglib_construct_fb();
+    	crx.framebuffer = &fb;
+		break;
+	default:
         ctx.framebuffer = NULL;
         break;
     }
@@ -246,7 +252,7 @@ void fglib_queue_commit(fglib_ctx *ctx)
         switch (action->kind)
         {
         case FGLIB_ACTION_DRAW_PIXEL:
-            // ToDo: Implement the draw pixel action.
+            // TODO: Implement the draw pixel action.
             break;
         }
     }
@@ -314,6 +320,12 @@ void _fglib_fb_plot(fglib_ctx *ctx, int x, int y, _fglib_type_u32 color)
     default:
         break;
     }
+}
+
+// TODO: Correctly create framebuffer from args.
+fglib_framebuffer _fglib_construct_fb() {
+	fglib_framebuffer fb;
+	return fb;
 }
 
 #endif // FGLIB_IMPLEMENTATION
